@@ -1,16 +1,31 @@
 services:
 
-  postgres:
-    container_name: postgres
+  postgres-fraud:
+    container_name: postgres-fraud
     image: postgres
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: password
       PGDATA: /data/postgres
     volumes:
-      - postgres:/data/postgres
+      - ./postgres1_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+  postgres-customer:
+    container_name: postgres-customer
+    image: postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      PGDATA: /data/postgres
+    volumes:
+      - ./postgres2_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
     networks:
       - postgres
     restart: unless-stopped
