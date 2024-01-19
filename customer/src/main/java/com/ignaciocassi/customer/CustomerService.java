@@ -1,20 +1,19 @@
 package com.ignaciocassi.customer;
 
+import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
+@AllArgsConstructor
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
 
     private final RestTemplate restTemplate;
 
-    public CustomerService(CustomerRepository customerRepository,
-                           RestTemplate restTemplate) {
-        this.customerRepository = customerRepository;
-        this.restTemplate = restTemplate;
-    }
+
     public void registerCustomer(CustomerRegistrationRequest request) {
         Customer customer = Customer.builder()
                 .firstName(request.firstName())
@@ -26,7 +25,7 @@ public class CustomerService {
                 FraudCheckResponse.class,
                 customer.getId());
         if (fraudCheckResponse.isFraudster()) {
-            throw new IllegalStateException("fraudster");
+            throw new FraudException("fraudster");
         }
         // TODO: check if email is valid
         // TODO: check if email is not taken

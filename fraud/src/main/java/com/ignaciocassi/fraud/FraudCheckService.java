@@ -21,7 +21,7 @@ public class FraudCheckService {
                         .customerId(customerId)
                         .build()
         );
-        return true;
+        return false;
     }
 
 }
