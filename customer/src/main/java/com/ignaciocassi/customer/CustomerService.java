@@ -21,11 +21,11 @@ public class CustomerService {
                 .email(request.email())
                 .build();
         customerRepository.saveAndFlush(customer);
-        FraudCheckResponse fraudCheckResponse = restTemplate.getForObject("http://localhost:8081/api/v1/fraud-check/{customerId}",
+        FraudCheckResponse fraudCheckResponse = restTemplate.getForObject("http://FRAUD:8081/api/v1/fraud-check/{customerId}",
                 FraudCheckResponse.class,
                 customer.getId());
         if (fraudCheckResponse.isFraudster()) {
-            throw new FraudException("fraudster");
+            throw new FraudException("The email " + customer.getEmail() + " is already taken.");
         }
         // TODO: check if email is valid
         // TODO: check if email is not taken

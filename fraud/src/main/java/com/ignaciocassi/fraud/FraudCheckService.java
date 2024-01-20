@@ -21,7 +21,8 @@ public class FraudCheckService {
                         .customerId(customerId)
                         .build()
         );
-        return false;
+        // TODO: Remove hardcoded value
+        return true;
     }
 
 }
