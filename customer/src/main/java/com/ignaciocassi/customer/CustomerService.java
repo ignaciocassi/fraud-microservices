@@ -1,9 +1,9 @@
 package com.ignaciocassi.customer;
 
+import com.ignaciocassi.clients.fraud.FraudClient;
 import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 @Service
 @AllArgsConstructor
@@ -11,7 +11,7 @@ public class CustomerService {
 
     private final CustomerRepository customerRepository;
 
-    private final RestTemplate restTemplate;
+    private final FraudClient fraudClient;
 
 
     public void registerCustomer(CustomerRegistrationRequest request) {
@@ -21,13 +21,12 @@ public class CustomerService {
                 .email(request.email())
                 .build();
         customerRepository.saveAndFlush(customer);
-        FraudCheckResponse fraudCheckResponse = restTemplate.getForObject("http://FRAUD:8081/api/v1/fraud-check/{customerId}",
-                FraudCheckResponse.class,
-                customer.getId());
-        if (fraudCheckResponse.isFraudster()) {
-            throw new FraudException("The email " + customer.getEmail() + " is already taken.");
+        ResponseEntity<Object> response = fraudClient.isFraudster(customer.getId());
+        if (response.getStatusCode().is2xxSuccessful()) {
+            throw new FraudException("Fraud detected for customer: " + customer.getId());
         }
         // TODO: check if email is valid
         // TODO: check if email is not taken
+        // TODO: send notification
     }
 }

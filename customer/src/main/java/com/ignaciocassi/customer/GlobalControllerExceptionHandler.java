@@ -17,6 +17,7 @@ public class GlobalControllerExceptionHandler {
         log.error("Fraud detected: " + exception.getMessage());
         Map<String, String> body = new HashMap<>();
         body.put("message", exception.getMessage());
+        body.put("status", HttpStatus.CONFLICT.toString());
         return new ResponseEntity<>(body, HttpStatus.CONFLICT);
     }
 
