@@ -1,6 +1,8 @@
 package com.ignaciocassi.customer;
 
 import com.ignaciocassi.clients.fraud.FraudClient;
+import com.ignaciocassi.clients.notification.NotificationClient;
+import com.ignaciocassi.clients.notification.NotificationRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,8 @@ public class CustomerService {
 
     private final FraudClient fraudClient;
 
+    private final NotificationClient notificationClient;
+
 
     public void registerCustomer(CustomerRegistrationRequest request) {
         Customer customer = Customer.builder()
@@ -22,11 +26,19 @@ public class CustomerService {
                 .build();
         customerRepository.saveAndFlush(customer);
         ResponseEntity<Object> response = fraudClient.isFraudster(customer.getId());
-        if (response.getStatusCode().is2xxSuccessful()) {
+        if (response.getStatusCode().isError()) {
             throw new FraudException("Fraud detected for customer: " + customer.getId());
         }
-        // TODO: check if email is valid
+        if (response.getStatusCode().is2xxSuccessful()) {
+            NotificationRequest notificationRequest = NotificationRequest.builder()
+                            .title("Fraud detected")
+                            .toCustomerEmail(customer.getEmail())
+                            .message("Fraud detected for customer: " + customer.getId())
+                            .build();
+            notificationClient.send(notificationRequest);
+        }
         // TODO: check if email is not taken
+        // TODO: check if email is valid
         // TODO: send notification
     }
 }
