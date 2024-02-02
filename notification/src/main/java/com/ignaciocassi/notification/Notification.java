@@ -1,4 +1,4 @@
-package com.ignaciocassi;
+package com.ignaciocassi.notification;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

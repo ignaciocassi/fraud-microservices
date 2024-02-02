@@ -1,5 +1,6 @@
 package com.ignaciocassi.customer;
 
+import com.ignaciocassi.amqp.RabbitMQMessageProducer;
 import com.ignaciocassi.clients.fraud.FraudClient;
 import com.ignaciocassi.clients.notification.NotificationClient;
 import com.ignaciocassi.clients.notification.NotificationRequest;
@@ -16,6 +17,8 @@ public class CustomerService {
     private final FraudClient fraudClient;
 
     private final NotificationClient notificationClient;
+
+    private final RabbitMQMessageProducer rabbitMQMessageProducer;
 
 
     public void registerCustomer(CustomerRegistrationRequest request) {
@@ -35,10 +38,12 @@ public class CustomerService {
                             .toCustomerEmail(customer.getEmail())
                             .message("Fraud detected for customer: " + customer.getId())
                             .build();
-            notificationClient.send(notificationRequest);
+            rabbitMQMessageProducer.publish("internal.exchange",
+                    "internal.notification.routing-key",
+                    notificationRequest
+            );
         }
         // TODO: check if email is not taken
         // TODO: check if email is valid
-        // TODO: send notification
     }
 }

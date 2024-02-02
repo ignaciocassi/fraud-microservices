@@ -1,4 +1,4 @@
-package com.ignaciocassi;
+package com.ignaciocassi.notification;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
