@@ -87,20 +87,28 @@
                     <version>3.1.4</version>
                     <configuration>
                         <from>
-                            <image>eclipse-temurin:17</image>
+                            <image>eclipse-temurin:17@sha256:2b47a8ea946ce1e5365a1562414ed576e378b7b670cadff3fb98ebecf2890cdc</image>
                             <platforms>
-                                <platform>amd64</platform>
-                                <os>linux</os>
+                                <platform>
+                                    <architecture>amd64</architecture>
+                                    <os>linux</os>
+                                </platform>
                             </platforms>
                         </from>
                         <to>
                             <tags>
-                                <tag>
-                                    latest
-                                </tag>
+                                <tag>latest</tag>
                             </tags>
                         </to>
                     </configuration>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>build</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
