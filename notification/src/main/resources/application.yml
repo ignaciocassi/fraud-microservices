@@ -7,7 +7,7 @@ spring:
   datasource:
     username: 'admin'
     password: 'password'
-    url: jdbc:postgresql://localhost:5434/notification
+    url: jdbc:postgresql://localhost:5434/postgres
     jpa:
       properties:
         hibernate:
@@ -18,6 +18,8 @@ spring:
       show-sql: 'true'
   zipkin:
     base-url: http://localhost:9411
+  flyway:
+    locations: classpath:db/migration
   rabbitmq:
     addresses: localhost:5672
 

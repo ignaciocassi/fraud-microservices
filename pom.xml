@@ -28,6 +28,7 @@
         <spring.boot.dependencies.version>2.5.7</spring.boot.dependencies.version>
         <spring-cloud.version>2020.0.3</spring-cloud.version>
         <image>nachocassi97/${project.artifactId}:${project.version}</image>
+        <flyway-database-postgresql>10.7.1</flyway-database-postgresql>
     </properties>
 
     <dependencyManagement>
@@ -46,7 +47,14 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-database-postgresql</artifactId>
+                <version>${flyway-database-postgresql.version}</version>
+                <scope>runtime</scope>
+            </dependency>
         </dependencies>
+
     </dependencyManagement>
 
     <dependencies>

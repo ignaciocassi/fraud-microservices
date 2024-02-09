@@ -2,7 +2,7 @@ services:
 
   postgres-customer:
     container_name: postgrescustomer
-    image: postgres
+    image: postgres:16.0@sha256:a80d0c1b119cf3d6bab27f72782f16e47ab8534ced937fa813ec2ab26e1fd81e
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: password
@@ -17,7 +17,7 @@ services:
 
   postgres-fraud:
     container_name: postgresfraud
-    image: postgres
+    image: postgres:16.0@sha256:a80d0c1b119cf3d6bab27f72782f16e47ab8534ced937fa813ec2ab26e1fd81e
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: password
@@ -32,7 +32,7 @@ services:
 
   postgres-notification:
     container_name: postgresnotification
-    image: postgres
+    image: postgres:16.0@sha256:a80d0c1b119cf3d6bab27f72782f16e47ab8534ced937fa813ec2ab26e1fd81e
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: password

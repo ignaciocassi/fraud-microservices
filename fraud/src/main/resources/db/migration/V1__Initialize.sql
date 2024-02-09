@@ -1,11 +1,3 @@
--- Database:
-
-CREATE DATABASE Fraud;
-
--- Table: public.fraud
-
--- DROP TABLE IF EXISTS public.fraud;
-
 CREATE TABLE IF NOT EXISTS public.fraud
 (
     id bigint NOT NULL,
@@ -20,10 +12,6 @@ CREATE TABLE IF NOT EXISTS public.fraud
 ALTER TABLE IF EXISTS public.fraud
     OWNER to admin;
 
--- SEQUENCE: public.fraud
-
--- DROP SEQUENCE IF EXISTS public.fraud_id_sequence;
-
 CREATE SEQUENCE IF NOT EXISTS public.fraud_id_sequence
     INCREMENT 50
     START 1
@@ -34,10 +22,6 @@ CREATE SEQUENCE IF NOT EXISTS public.fraud_id_sequence
 
 ALTER SEQUENCE public.fraud_id_sequence
     OWNER TO admin;
-
--- Table: public.fraud_check_history
-
--- DROP TABLE IF EXISTS public.fraud_check_history;
 
 CREATE TABLE IF NOT EXISTS public.fraud_check_history
 (
@@ -52,10 +36,6 @@ CREATE TABLE IF NOT EXISTS public.fraud_check_history
 
 ALTER TABLE IF EXISTS public.fraud_check_history
     OWNER to admin;
-
--- SEQUENCE: public.fraud_check_history
-
--- DROP SEQUENCE IF EXISTS public.fraud_check_history_id_sequence;
 
 CREATE SEQUENCE IF NOT EXISTS public.fraud_check_history_id_sequence
     INCREMENT 50

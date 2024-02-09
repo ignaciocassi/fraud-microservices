@@ -1,12 +1,4 @@
--- Database:
-
-CREATE DATABASE Notification;
-
--- Table: public.notification
-
--- DROP TABLE IF EXISTS public.notification;
-
-CREATE TABLE IF NOT EXISTS notification
+CREATE TABLE IF NOT EXISTS public.notification
 (
     notification_id INT NOT NULL,
     sent_at TIMESTAMP NOT NULL,
@@ -22,10 +14,6 @@ CREATE TABLE IF NOT EXISTS notification
 
 ALTER TABLE IF EXISTS public.notification
     OWNER to admin;
-
--- SEQUENCE: public.notification
-
--- DROP SEQUENCE IF EXISTS public.notification_id_sequence;
 
 CREATE SEQUENCE IF NOT EXISTS public.notification_id_sequence
     INCREMENT 50
