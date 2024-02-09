@@ -1,22 +1,7 @@
 services:
 
-  postgres-fraud:
-    container_name: postgres-fraud
-    image: postgres
-    environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: password
-      PGDATA: /data/postgres
-    volumes:
-      - ./postgres1_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-    networks:
-      - postgres
-    restart: unless-stopped
-
   postgres-customer:
-    container_name: postgres-customer
+    container_name: postgrescustomer
     image: postgres
     environment:
       POSTGRES_USER: admin
@@ -25,13 +10,28 @@ services:
     volumes:
       - ./postgres2_data:/var/lib/postgresql/data
     ports:
+      - "5432:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+  postgres-fraud:
+    container_name: postgresfraud
+    image: postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      PGDATA: /data/postgres
+    volumes:
+      - ./postgres1_data:/var/lib/postgresql/data
+    ports:
       - "5433:5432"
     networks:
       - postgres
     restart: unless-stopped
 
   postgres-notification:
-    container_name: postgres-notification
+    container_name: postgresnotification
     image: postgres
     environment:
       POSTGRES_USER: admin
@@ -74,6 +74,8 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    networks:
+      - spring
 
   eureka-server:
     image: nachocassi97/eureka-server:latest
@@ -99,6 +101,54 @@ services:
     depends_on:
       - zipkin
       - eureka-server
+
+  customer:
+    image: nachocassi97/customer:latest
+    container_name: customer
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "8080:8080"
+    networks:
+      - spring
+      - postgres
+    depends_on:
+      - eureka-server
+      - zipkin
+      - postgres-customer
+      - rabbitmq
+
+  fraud:
+    image: nachocassi97/fraud:latest
+    container_name: fraud
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "8081:8081"
+    networks:
+      - spring
+      - postgres
+    depends_on:
+      - eureka-server
+      - zipkin
+      - postgres-fraud
+      - rabbitmq
+
+  notification:
+    image: nachocassi97/notification:latest
+    container_name: notification
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "8082:8082"
+    networks:
+      - spring
+      - postgres
+    depends_on:
+      - eureka-server
+      - zipkin
+      - postgres-notification
+      - rabbitmq
 
 networks:
   spring:

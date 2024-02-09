@@ -1,8 +1,11 @@
+-- Database: customer
+CREATE DATABASE customer;
+
 -- Table: public.customer
 
--- DROP TABLE IF EXISTS public.customer;
+-- DROP TABLE IF EXISTS customer.public.customer;
 
-CREATE TABLE IF NOT EXISTS public.customer
+CREATE TABLE IF NOT EXISTS customer.public.customer
 (
     id bigint NOT NULL,
     first_name character varying COLLATE pg_catalog."default" NOT NULL,
@@ -13,14 +16,14 @@ CREATE TABLE IF NOT EXISTS public.customer
 
     TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS public.customer
+ALTER TABLE IF EXISTS customer.public.customer
     OWNER to admin;
 
 -- SEQUENCE: public.customer_id_sequence
 
 -- DROP SEQUENCE IF EXISTS public.customer_id_sequence;
 
-CREATE SEQUENCE IF NOT EXISTS public.customer_id_sequence
+CREATE SEQUENCE IF NOT EXISTS customer.public.customer_id_sequence
     INCREMENT 50
     START 1
     MINVALUE 1
