@@ -18,16 +18,14 @@ public class FraudController {
 
     private final FraudCheckService fraudCheckService;
 
-    @GetMapping(path = "{customerId}")
-    public ResponseEntity<Object> isFraudster(@PathVariable("customerId") Integer customerId) {
-        log.info("Fraud check request for customer {}", customerId);
-        boolean isFraudulent = fraudCheckService.isFraudulentCustomer(customerId);
+    @GetMapping(path = "{email}")
+    public ResponseEntity<Object> isFraudster(@PathVariable("email") String email) {
+        log.info("Fraud check request for customer email {}", email);
+        var response = fraudCheckService.isFraudulentCustomer(email);
         return FraudResponseHandler.generateResponse(
-                HttpStatus.OK,
-                isFraudulent ?
-                        "Fraud detected for customerId: " + customerId :
-                        "No fraud detected for customerId: " + customerId,
-                isFraudulent);
+                response.status(),
+                response.message(),
+                response.isFraudulent());
     }
 
 }

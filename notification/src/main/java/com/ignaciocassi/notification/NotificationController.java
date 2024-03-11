@@ -17,13 +17,13 @@ public class NotificationController {
 
     @PostMapping
     public ResponseEntity<Object> send(@RequestBody NotificationRequest notificationRequest) {
-        log.info("Sending notification to customer email: {} title: {} message {}",
+        log.info("Send notification request received for customer email: {} title: {} message {}",
                 notificationRequest.toCustomerEmail(),
                 notificationRequest.title(),
                 notificationRequest.message());
         boolean created = notificationService.send(notificationRequest);
         // TODO: Handle responses
-        return ResponseEntity.ok().build();
+        return created ? ResponseEntity.ok().build() : ResponseEntity.badRequest().build();
     }
 
 }

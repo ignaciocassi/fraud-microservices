@@ -16,4 +16,8 @@ public class CustomerResponseHandler {
         return new ResponseEntity<>(map, status);
     }
 
+    public static ResponseEntity<Object> generateResponse(String message, HttpStatus status) {
+        return generateResponse(message, status, Optional.empty());
+    }
+
 }

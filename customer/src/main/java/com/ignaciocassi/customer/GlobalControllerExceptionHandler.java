@@ -12,13 +12,13 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalControllerExceptionHandler {
 
-    @ExceptionHandler(FraudException.class)
-    public ResponseEntity<Object> handleFraud(FraudException exception) {
-        log.error("Fraud detected: " + exception.getMessage());
+    @ExceptionHandler(EmailNotFoundException.class)
+    public ResponseEntity<Object> handleEmailNotFound(EmailNotFoundException exception) {
+        log.error("Handling EmailNotFoundException: " + exception.getMessage());
         Map<String, String> body = new HashMap<>();
         body.put("message", exception.getMessage());
-        body.put("status", HttpStatus.CONFLICT.toString());
-        return new ResponseEntity<>(body, HttpStatus.CONFLICT);
+        body.put("status", HttpStatus.NOT_FOUND.toString());
+        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
 
 }

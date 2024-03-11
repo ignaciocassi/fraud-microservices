@@ -3,7 +3,7 @@ CREATE TABLE postgres.public.customer
     id bigint NOT NULL,
     first_name character varying COLLATE pg_catalog."default" NOT NULL,
     last_name character varying COLLATE pg_catalog."default" NOT NULL,
-    email character varying COLLATE pg_catalog."default" NOT NULL,
+    email character varying COLLATE pg_catalog."default" NOT NULL UNIQUE,
     CONSTRAINT customer_pkey PRIMARY KEY (id)
     );
 
